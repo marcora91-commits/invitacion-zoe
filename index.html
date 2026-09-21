@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zoe — Baby Shower</title>
+<meta name="theme-color" content="#f7dfe7">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#f7dfe7;overflow-x:hidden}
+body{font-family:Georgia,"Times New Roman",serif}
+section{position:relative;width:100%;overflow:hidden}
+img{display:block;width:100%;height:auto}
+
+/* PORTADA */
+.cover{
+  aspect-ratio:1081/1920;
+  background:url("portada-fondo.png") center/cover no-repeat;
+}
+.cover-text{
+  position:absolute;z-index:3;top:4.5%;left:50%;width:87.4%;
+  transform:translateX(-50%);
+  animation:fadeDown 1.1s .45s both;
+}
+.cover-characters{
+  position:absolute;z-index:2;left:50%;bottom:0;width:100.2%;
+  transform:translateX(-50%);
+  animation:rise 1.25s .1s both;
+}
+.scroll-hint{
+  position:absolute;z-index:5;left:50%;bottom:2%;
+  transform:translateX(-50%);
+  color:#fff;font:11px Arial,sans-serif;letter-spacing:2px;
+  text-shadow:0 1px 5px rgba(0,0,0,.35);
+  animation:float 2s ease-in-out infinite;
+}
+.scroll-hint span{display:block;text-align:center;font-size:18px;margin-top:2px}
+
+/* UNA SOLA PIEZA CONTINUA */
+.body-design{
+  position:relative;width:100%;background:#f9e6ec;
+}
+.design-image{
+  width:100%;height:auto;display:block;
+  opacity:0;transform:translateY(22px);
+  transition:opacity 1s ease,transform 1s ease;
+}
+.body-design.visible .design-image{opacity:1;transform:none}
+
+/*
+  CONTADOR:
+  El título "¿Cuánto falta?" original se conserva.
+  La zona inferior original con los cuatro 00 se cubre COMPLETAMENTE.
+  Luego se dibuja UNA SOLA fila de cuatro cajas nuevas.
+*/
+.counter-mask{
+  position:absolute;
+  left:14.7%;
+  width:70.6%;
+  top:79.35%;
+  height:5.65%;
+  z-index:8;
+  background:
+    radial-gradient(circle at 25% 30%,rgba(255,255,255,.38),transparent 42%),
+    radial-gradient(circle at 72% 65%,rgba(245,198,215,.20),transparent 48%),
+    linear-gradient(180deg,#faeef2 0%,#f9e9ee 100%);
+  border-radius:8px;
+}
+
+.live-countdown{
+  position:absolute;
+  left:20.5%;
+  width:59.0%;
+  top:79.72%;
+  height:3.15%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3.1%;
+  z-index:10;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .75s .35s ease,transform .75s .35s ease;
+}
+.body-design.visible .live-countdown{opacity:1;transform:none}
+
+.live-box{
+  min-width:0;
+  height:100%;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:clamp(25px,6.7vw,44px);
+  line-height:1;
+  font-style:italic;
+}
+.live-box:nth-child(odd){background:#7b8050}
+.live-box:nth-child(even){background:#9a9b38}
+
+.live-labels{
+  position:absolute;
+  left:20.5%;
+  width:59.0%;
+  top:83.02%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3.1%;
+  z-index:10;
+  color:#7b8050;
+  text-align:center;
+  font-size:clamp(8px,1.75vw,12px);
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .7s .7s ease,transform .7s .7s ease;
+}
+.body-design.visible .live-labels{opacity:1;transform:none}
+
+/* Botones reales sobre los botones dibujados */
+.hit{
+  position:absolute;z-index:12;display:block;border-radius:28px;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .7s .9s ease,transform .7s .9s ease;
+}
+.body-design.visible .hit{opacity:1;transform:none}
+.whatsapp{left:6.9%;width:38.8%;top:91.8%;height:6.1%}
+.waze{left:52.8%;width:40%;top:91.8%;height:6.1%}
+.hit:focus-visible{outline:3px solid rgba(255,255,255,.95);outline-offset:3px}
+
+@keyframes fadeDown{
+ from{opacity:0;transform:translate(-50%,-25px)}
+ to{opacity:1;transform:translate(-50%,0)}
+}
+@keyframes rise{
+ from{opacity:0;transform:translate(-50%,35px)}
+ to{opacity:1;transform:translate(-50%,0)}
+}
+@keyframes float{
+ 0%,100%{margin-bottom:0}
+ 50%{margin-bottom:7px}
+}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important}
+ .design-image,.live-countdown,.live-labels,.hit{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<section class="cover" aria-label="Portada">
+  <img class="cover-text" src="portada-texto.png" alt="Celebremos la llegada de Zoe">
+  <img class="cover-characters" src="portada-personajes.png" alt="">
+  <div class="scroll-hint">DESLIZA<span>⌄</span></div>
+</section>
+
+<section class="body-design" id="invitation" aria-label="Invitación">
+  <img class="design-image" src="punto2-3-completo.png" alt="Invitación al Baby Shower de Zoe">
+
+  <div class="counter-mask" aria-hidden="true"></div>
+
+  <div class="live-countdown" aria-live="polite" aria-label="Cuenta regresiva">
+    <div class="live-box" id="days">00</div>
+    <div class="live-box" id="hours">00</div>
+    <div class="live-box" id="minutes">00</div>
+    <div class="live-box" id="seconds">00</div>
+  </div>
+
+  <div class="live-labels" aria-hidden="true">
+    <div>DÍAS</div>
+    <div>HORAS</div>
+    <div>MINUTOS</div>
+    <div>SEGUNDOS</div>
+  </div>
+
+  <a class="hit whatsapp"
+     href="https://wa.me/50687335835?text=Hola%2C%20quiero%20confirmar%20mi%20asistencia%20al%20Baby%20Shower%20de%20Zoe.%20%F0%9F%92%95"
+     target="_blank" rel="noopener" aria-label="Confirmar asistencia por WhatsApp"></a>
+
+  <a class="hit waze"
+     href="https://waze.com/ul/hd1u0m9gym"
+     target="_blank" rel="noopener" aria-label="Ver ubicación en Waze"></a>
+</section>
+
+<script>
+const eventDate = new Date("2026-10-24T14:00:00-06:00").getTime();
+
+function updateCountdown(){
+  let diff = eventDate - Date.now();
+  if(diff < 0) diff = 0;
+
+  const day=86400000, hour=3600000, minute=60000;
+  const d=Math.floor(diff/day);
+  const h=Math.floor((diff%day)/hour);
+  const m=Math.floor((diff%hour)/minute);
+  const s=Math.floor((diff%minute)/1000);
+
+  document.getElementById("days").textContent=String(d).padStart(2,"0");
+  document.getElementById("hours").textContent=String(h).padStart(2,"0");
+  document.getElementById("minutes").textContent=String(m).padStart(2,"0");
+  document.getElementById("seconds").textContent=String(s).padStart(2,"0");
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+const bodyDesign=document.getElementById("invitation");
+const observer=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    bodyDesign.classList.add("visible");
+    observer.disconnect();
+  }
+},{threshold:.08});
+observer.observe(bodyDesign);
+</script>
+</body>
+</html>
